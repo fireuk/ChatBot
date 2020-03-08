@@ -1,0 +1,3 @@
+name:dddd_2019010814_0.5_speech_negative_svd0.6
+md5:ad35a5a4268d1aa66026661bf234d508
+size:605K(small)

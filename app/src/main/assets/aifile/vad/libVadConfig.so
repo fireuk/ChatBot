@@ -1,0 +1,60 @@
+--feature-type=mfcc
+--mfcc-config=libVadMfccConfig.so
+--acoustic-scale=1.0
+--frames-per-chunk=3
+#    以下设置的参考值为推荐值
+#    --sil2sph-window=28        | 检测 VAD 的开始
+#    --sil2sph-threshold=0.8    | 条件为 28 帧(10ms/帧)，灵敏度为 0.8，即
+#                               | 约有 seepch 28 * 0.8 * 10ms = 224ms
+#                               | 才认为检测到 VAD 的开始
+#
+#    --sph2sil-window=58        | 检测 VAD 的结束
+#    --sph2sil-threshold=0.8    | 条件为 58 帧(10ms/帧)，灵敏度为 0.8，即
+#                               | 约有 silence 58 * 0.8 * 10ms = 464ms
+#                               | 才认为检测到 VAD 的结束
+#    VAD 的开始和结束检测条件，也可在 SDK 提供的 API 接口动态设置,
+#    需要注意的是，SDK 接口设置 VAD 开始和结束的参数是以 ms 为单位
+#
+--sil2sph-threshold=0.8
+--sil2sph-window=28
+--sph2sil-threshold=0.8
+--sph2sil-window=50
+#    以下项为 VAD 的高级功能(需要在本配置文件中设置)，
+#
+#    ● 如只需要检测 VAD 的开始和结束，请设置 --advance-vad-enable=false
+#
+#    ---------------------------------------------------------------------------------------------------
+#    功能：需要在检测 VAD 的开始 到 VAD 的结束间的小段静音时，才需要设置，具体为检测 VAD pausse, resume
+#   
+#        vad puase: 即在检测到 VAD 的开始 结束段，检测到小段静音，认为检测到 VAD pause
+#        vad resume: vad puase 后又检测到 speech, 认为检测到 VAD resume
+# 
+#    激活本高级功能的方法：
+#        --advance-vad-enable=true
+#    关闭本高级功能的方法：
+#        --advance-vad-enable=false
+#    
+#
+#    --mid-sph2sil-window=15      | 检测 VAD 的 pause
+#    --mid-sph2sil-threshold=0.5  | 条件为 20帧(10ms/帧)，灵敏度为 0.8，即
+#                                 | 约有 silence 20 * 0.8 * 10ms = 160ms
+#                                 | 才认为检测到 VAD pause
+#    注意：--mid-sph2sil-window < --sph2sil-window
+#
+#    --mid-sil2sph-window=27      | 检测 VAD 的resume
+#    --mid-sil2sph-threshold=0.8  | 条件为 27帧(10ms/帧)，灵敏度为 0.8，即
+#                                 | 约有 speech 27 * 0.8 * 10ms = 216ms
+#                                 | 才认为检测到 VAD resume
+#    注意：--mid-sil2sph-window < --sil2sph-window
+#    ---------------------------------------------------------------------------------------------------
+--advance-vad-enable=true
+--mid-sil2sph-threshold=0.8
+--mid-sil2sph-window=27
+--mid-sph2sil-threshold=0.8
+--mid-sph2sil-window=12
+# 下面的model version 为 md5 的前 7 位
+--model-version=2163cb1
+# 注意，加载模型前会校验 md5，如果与本配置文件不一致，将初始化失败
+--model-md5=2163cb103b19de666b2170fa63c162ec
+# 下面的选项，用于记录模型的生成位置信息
+--model-builder=/ceph/sz_ts80_new/sata/hughjli/work_home/project/VAD-trainnig/kaldi_web/kaldi-5.2/egs/tencent/s5/run/run_vad_reverb12_from11/exp/tdnn_250
